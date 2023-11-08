@@ -1,0 +1,46 @@
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: ""
+  discard_data: false
+  interval: 3600
+  logging: snapshot
+  min_osquery_version: ""
+  name: Crowdstrike Falcon - Health Check - Cloud Connected?
+  observer_can_run: false
+  platform: ""
+  query: SELECT lp.address, lp.pid, lp.port, lp.protocol, p.name, p.path, p.cmdline
+    FROM listening_ports lp JOIN processes p ON lp.pid = p.pid WHERE p.name LIKE "falcon-sensor";
+  team: EDR health check
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Check running processes to verify the Falcon sensor is running
+  discard_data: false
+  interval: 3600
+  logging: snapshot
+  min_osquery_version: ""
+  name: Crowdstrike Falcon - Health Check - Kernel Module (linux)?
+  observer_can_run: false
+  platform: ""
+  query: SELECT * FROM kernel_modules WHERE name LIKE "%falcon%";
+  team: EDR health check
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Check running processes to verify the Falcon sensor is running
+  discard_data: false
+  interval: 3600
+  logging: snapshot
+  min_osquery_version: ""
+  name: Crowdstrike Falcon - Health Check - Running Process?
+  observer_can_run: false
+  platform: ""
+  query: SELECT * FROM processes WHERE name like "falcon-sensor";
+  team: EDR health check
